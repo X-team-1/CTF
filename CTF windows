@@ -1,0 +1,23 @@
+@echo off
+setlocal enabledelayedexpansion
+
+:: Check if user 'tris' exists
+net user tris >nul 2>&1
+if errorlevel 1 (
+    echo Error: User 'tris' does not exist.
+    goto :end
+)
+
+:: Check if 'tris' is in Administrators group
+net localgroup Administrators | findstr /C:"tris" >nul
+if errorlevel 1 (
+    echo Error: User 'tris' is not a member of the Administrators group.
+    goto :end
+)
+
+:: All checks passed, create flag.txt
+echo CTF{UXVpemUuRmxhZy110} > flag.txt
+echo Success: All conditions checked. flag.txt has been created.
+
+:end
+endlocal
